@@ -1,0 +1,55 @@
+<div class="container-fluid position-relative">
+  <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?cs=srgb&dl=pexels-chanwalrus-958545.jpg&fm=jpg" alt="Beautiful scenery" class="img-fluid">
+
+ <div class="overlay-content" *ngIf="inputVisible">
+    <input type="text" class="form-control d-inline-block" placeholder="Search" [(ngModel)]="searchText">
+    <button class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+   <div class="search-results-overlay" *ngIf="showResults && searchResults && searchResults.length > 0">
+    <div class="row">
+      <div class="col-md-4" *ngFor="let recipe of searchResults; let i = index" (click)="showRecipeDetails(recipe, i)">
+        <div class="card mb-4" *ngIf="cardVisible[i]">
+          <img [src]="recipe.image" class="card-img-top" alt="{{ recipe.title }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">ID: {{ recipe.id }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recipe-details-overlay" *ngIf="selectedRecipe">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img [src]="selectedRecipe.image" alt="{{ selectedRecipe.title }}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{ selectedRecipe.title }}</h5>
+            <p class="card-text">ID: {{ selectedRecipe.id }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-8">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Ingredients</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item" *ngFor="let ingredient of recipeIngredients">{{ ingredient.original }}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Instructions</h5>
+            <ol class="list-group list-group-numbered">
+              <li class="list-group-item" *ngFor="let step of recipeInstructions">{{ step.step }}</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
